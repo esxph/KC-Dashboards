@@ -4,19 +4,28 @@
 	import ChevronsUpDownIcon from '@lucide/svelte/icons/chevrons-up-down';
 	import * as Avatar from '$lib/components/ui/avatar/index.js';
 	import CircleUserIcon from '@lucide/svelte/icons/circle-user';
-	import ProjectSelector from '$lib/components/project-selector.svelte';
 	import { toast } from 'svelte-sonner';
+	import ProjectSelector from '$lib/components/project-selector.svelte';
 	const sidebar = Sidebar.useSidebar();
 
 	let { navItems, profile, currentPage, projectList, project } = $props();
 </script>
 
 <Sidebar.Root class="top-(--header-height) h-[calc(100svh-var(--header-height))]!">
+	
 	<Sidebar.Header>
-		<!-- Project Selector -->
-		<ProjectSelector {projectList} {project} />
-		<Sidebar.Separator class="mx-0" />
+		<div class="flex flex-col items-center">
+			<h2 class="mb-1 pt-2 text-xs font-semibold text-muted-foreground tracking-tight">
+				Proyecto Actual
+			</h2>
+			<ProjectSelector {projectList} {project} />
+		</div>
+		<Sidebar.Separator class="mt-1" />
+		<h2 class="pt-2 pl-2 text-m font-semibold tracking-tight">
+			Páginas
+		</h2>
 	</Sidebar.Header>
+	
 	<Sidebar.Content>
 		<Sidebar.Group>
 			<Sidebar.GroupContent>

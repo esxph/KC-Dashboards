@@ -1,10 +1,22 @@
 <script lang="ts">
+	import * as Card from '$lib/components/ui/card/index.js';
 	import ArcChart from '$lib/components/charts/arc-chart.svelte';
-	import BarChart from '$lib/components/charts/bar-chart.svelte';
-	import LineChart from '$lib/components/charts/line-chart.svelte';
+	import BarChartComponent from '$lib/components/charts/bar-chart.svelte';
+	import LineChartComponent from '$lib/components/charts/line-chart.svelte';
+	
 	let { data } = $props();
 	let { components } = $derived(data);
 
+	// Chart configuration for consistent styling and behavior
+	const chartConfig = {
+		value: { label: 'Avance Real', color: '#2563eb' },
+		baseline: { label: 'Línea Base', color: '#6b7280' },
+		apples: { label: 'Subpartida A', color: '#2563eb' },
+		bananas: { label: 'Subpartida B', color: '#dc2626' },
+		oranges: { label: 'Subpartida C', color: '#16a34a' }
+	};
+
+	// Sample data for demonstration
 	const dateSeriesData: Array<{ date: Date; value: number; baseline: number }> = [
 		{ date: new Date('2025-08-04T06:00:00.000Z'), value: 93, baseline: 49 },
 		{ date: new Date('2025-08-05T06:00:00.000Z'), value: 25, baseline: 83 },
@@ -50,38 +62,98 @@
 		{ date: new Date('2025-08-12T06:00:00.000Z'), apples: 33, bananas: 22, oranges: 74 },
 		{ date: new Date('2025-08-13T06:00:00.000Z'), apples: 38, bananas: 84, oranges: 95 }
 	];
+
+	// Helper function to format percentage
+	const formatPercent = (value: number) => `${value}%`;
 </script>
 
 <div class="flex flex-1 flex-col gap-8 p-8">
-	<!-- Demo BarChart for Subpartidas using provided dataset -->
-	<BarChart data={dateSeriesData} color="fill-blue-600" />
+	<!-- Summary Metrics for Subpartidas -->
+	<div class="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+		<Card.Root class="p-4">
+			<Card.Title class="text-sm font-medium text-muted-foreground">Total Subpartidas</Card.Title>
+			<Card.Content class="p-0">
+				<div class="text-2xl font-bold">{components?.length || 0}</div>
+			</Card.Content>
+		</Card.Root>
+		
+		<Card.Root class="p-4">
+			<Card.Title class="text-sm font-medium text-muted-foreground">Promedio Avance</Card.Title>
+			<Card.Content class="p-0">
+				<div class="text-2xl font-bold">
+					{formatPercent(components?.length ? Math.round(components.reduce((sum, c) => sum + c.percent, 0) / components.length) : 0)}
+				</div>
+			</Card.Content>
+		</Card.Root>
+		
+		<Card.Root class="p-4">
+			<Card.Title class="text-sm font-medium text-muted-foreground">Máximo Avance</Card.Title>
+			<Card.Content class="p-0">
+				<div class="text-2xl font-bold">
+					{formatPercent(components?.length ? Math.max(...components.map(c => c.percent)) : 0)}
+				</div>
+			</Card.Content>
+		</Card.Root>
+		
+		<Card.Root class="p-4">
+			<Card.Title class="text-sm font-medium text-muted-foreground">Mínimo Avance</Card.Title>
+			<Card.Content class="p-0">
+				<div class="text-2xl font-bold">
+					{formatPercent(components?.length ? Math.min(...components.map(c => c.percent)) : 0)}
+				</div>
+			</Card.Content>
+		</Card.Root>
+	</div>
 
-	<!-- Demo LineChart for Subpartidas using provided dataset -->
-	<LineChart
-		data={multiSeriesData}
-		x="date"
-		series={[
-			{ key: 'apples', color: 'fill-blue-600' },
-			{ key: 'bananas', color: 'fill-red-600' },
-			{ key: 'oranges', color: 'fill-green-600' }
-		]}
-		onPointClick={(e, detail) => {
-			console.log(e, detail);
-			alert(JSON.stringify(detail));
-		}}
-	/>
+	<!-- Chart Widgets Grid -->
+	<div class="grid auto-rows-min gap-4 md:grid-cols-2">
+		<!-- Enhanced BarChart using ChartContainer and ChartTooltip -->
+		<BarChartComponent
+			title="Progreso vs Línea Base"
+			description="Comparación del avance real contra la planificación inicial"
+			data={dateSeriesData}
+			x="date"
+			y="value"
+			series={[
+				{ key: 'baseline', color: 'var(--color-surface-content)', props: { fillOpacity: 0.2 } },
+				{ key: 'value', color: '#2563eb', props: { insets: { x: 8 } } }
+			]}
+			chartConfig={chartConfig}
+		/>
+
+		<!-- Enhanced LineChart using ChartContainer and ChartTooltip -->
+		<LineChartComponent
+			title="Evolución Temporal por Categoría"
+			description="Seguimiento del progreso de diferentes tipos de subpartidas"
+			data={multiSeriesData}
+			x="date"
+			series={[
+				{ key: 'apples', color: '#2563eb' },
+				{ key: 'bananas', color: '#dc2626' },
+				{ key: 'oranges', color: '#16a34a' }
+			]}
+			onPointClick={(e: any, detail: any) => {
+				console.log(e, detail);
+				alert(JSON.stringify(detail));
+			}}
+			chartConfig={chartConfig}
+		/>
+	</div>
 
 	{#if !components?.length}
 		<div class="flex h-[200px] items-center justify-center text-muted-foreground">
 			No hay subpartidas para este proyecto
 		</div>
 	{:else}
-		<div class="grid auto-rows-min gap-4 md:grid-cols-3 lg:grid-cols-4">
-			{#each components as component (component.id)}
-				<div class="aspect-square rounded-xl">
-					<ArcChart title={component.name} value={component.percent} description="" />
-				</div>
-			{/each}
+		<div class="space-y-4">
+			<h3 class="text-lg font-semibold">Resumen por Subpartida</h3>
+			<div class="grid auto-rows-min gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+				{#each components as component (component.id)}
+					<div class="aspect-square rounded-xl">
+						<ArcChart title={component.name} value={component.percent} description="" />
+					</div>
+				{/each}
+			</div>
 		</div>
 	{/if}
 </div>

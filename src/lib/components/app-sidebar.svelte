@@ -6,6 +6,8 @@
 	import CircleUserIcon from '@lucide/svelte/icons/circle-user';
 	import { toast } from 'svelte-sonner';
 	import ProjectSelector from '$lib/components/project-selector.svelte';
+	import ArrowLeft from '@lucide/svelte/icons/arrow-left';
+	import { PUBLIC_ADMIN_URL } from '$env/static/public';
 	const sidebar = Sidebar.useSidebar();
 
 	let { navItems, profile, currentPage, projectList, project } = $props();
@@ -58,6 +60,18 @@
 		</Sidebar.Group>
 	</Sidebar.Content>
 	<Sidebar.Footer>
+		<!-- Volver a Civilog Button -->
+		<div class="px-3 py-2">
+			<a 
+				href={`${PUBLIC_ADMIN_URL}/site/${project.id}`}
+				class="flex w-full items-center justify-center gap-2 rounded-lg bg-primary px-3 py-2 text-sm font-medium text-primary-foreground hover:bg-primary/90 transition-colors"
+				data-sveltekit-preload-data="hover"
+			>
+				<ArrowLeft class="h-4 w-4" />
+				Volver a CiviLog
+			</a>
+		</div>
+		
 		<!-- User Menu -->
 		<Sidebar.Menu>
 			<Sidebar.MenuItem>

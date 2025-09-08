@@ -3,6 +3,7 @@
 	import PackageIcon from '@lucide/svelte/icons/package';
 	import HomeIcon from '@lucide/svelte/icons/house';
 	import ChevronRight from '@lucide/svelte/icons/chevron-right';
+	import BarChart3Icon from '@lucide/svelte/icons/bar-chart-3';
 	import AppSidebar from '$lib/components/app-sidebar.svelte';
 	import AppHeader from '$lib/components/app-header.svelte';
 	import { page } from '$app/state';
@@ -16,7 +17,8 @@
 		{ title: 'Partidas', url: '/partidas', icon: ChevronRight },
 		{ title: 'Subpartidas', url: '/subpartidas', icon: ChevronRight },
 		{ title: 'Conceptos', url: '/conceptos', icon: ChevronRight },
-		{ title: 'Subconceptos', url: '/subconceptos', icon: ChevronRight }
+		{ title: 'Subconceptos', url: '/subconceptos', icon: ChevronRight },
+		{ title: 'Chart Test', url: '/chart-test', icon: BarChart3Icon }
 	];
 
 	// Handle theme parameter from URL

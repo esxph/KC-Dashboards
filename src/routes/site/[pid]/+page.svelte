@@ -1,8 +1,9 @@
 <script lang="ts">
 	import MapViewer from '$lib/components/map-viewer.svelte';
-	import ArcChart from '$lib/components/charts/arc-chart.svelte';
+	import RadialChart from '$lib/components/radial-chart.svelte';
+	import RadialChartLabel from '$lib/components/radial-chart-label.svelte';
 	import * as Card from '$lib/components/ui/card/index.js';
-	import LineChartComponent from '$lib/components/charts/line-chart.svelte';
+	import LineChartMultiple from '$lib/components/line-chart-multiple.svelte';
 
 	const { data } = $props();
 	const { partidas, overallProgress, kmzExists, kmzUrl, project,locations } = $derived(data);
@@ -53,7 +54,7 @@
         <!-- Top Section: Map and Overall Progress Widget -->
         <div class="hidden md:flex flex min-h-0 flex-[2] flex-col gap-4 lg:flex-row lg:gap-6">
 			<!-- Map Section -->
-			<div class="min-h-0 flex-[4] min-h-[500px] lg:min-h-0">
+			<div class="min-h-0 flex-[7] min-h-[500px] lg:min-h-0">
 				{#if kmzExists && kmzUrl}
 					<MapViewer {kmzUrl} {locations} autoLoad={true} class="h-full" />
 				{:else}
@@ -68,36 +69,24 @@
 				{/if}
 			</div>
           <!-- Overall Progress Widget -->
-          <div class="min-h-0 flex-1 min-w-[180px] lg:min-w-0">
-				<ArcChart
-					title="Progreso General"
-					value={overallProgress}
-					description={partidas.length == 0
-						? 'Sin partidas'
-						: partidas.length == 1
-							? '1 partida'
-							: partidas.length + ' partidas'}
-					color="fill-green-600"
-				/>
+          <div class="min-h-0 flex-[3] min-w-[180px] lg:min-w-0">
+				<RadialChartLabel />
 			</div>
 		</div>
 
 		<!-- Enhanced LineChart using ChartContainer and ChartTooltip -->
-		<LineChartComponent
-			title="Evolución Temporal del Proyecto"
-			description="Seguimiento del progreso real vs proyectado"
-			data={multiSeriesData}
-			x="date"
-			series={[
-				{ key: 'Real', color: '#2563eb' },
-				{ key: 'Projectado', color: '#16a34a' },
-			]}
-			onPointClick={(e: any, detail: any) => {
-				console.log(e, detail);
-				alert(JSON.stringify(detail));
-			}}
-			chartConfig={chartConfig}
-		/>
+		<div class="p-4">
+			<h3 class="text-lg font-semibold mb-2">Evolución Temporal del Proyecto</h3>
+			<p class="text-sm text-muted-foreground mb-4">Seguimiento del progreso real vs proyectado</p>
+			<LineChartMultiple
+				data={multiSeriesData}
+				seriesKeys={['Real', 'Projectado']}
+				seriesLabels={['Real', 'Proyectado']}
+				seriesColors={['#2563eb', '#16a34a']}
+				title="Evolución Temporal del Proyecto"
+				description="Seguimiento del progreso real vs proyectado"
+			/>
+		</div>
 
 		
 		
@@ -115,17 +104,17 @@
 			{:else}
 				<div class="h-full">
 					<h3 class="mb-3 text-lg font-semibold md:mb-4">Progreso por Partidas</h3>
-					<div class="grid gap-3 md:gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-						<div class="md:hidden aspect-square min-h-0 overflow-hidden">
-							<ArcChart
+					<div class="grid auto-rows-min gap-3 md:gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+						<div class="md:hidden aspect-square">
+							<RadialChart
 								title="Progreso General"
 								value={overallProgress|| 0}
 								color="fill-green-600"
 							/>
 						</div>
 						{#each partidas as partida (partida.id)}
-							<div class="aspect-square min-h-0 overflow-hidden">
-								<ArcChart
+							<div class="aspect-square">
+								<RadialChart
 									title={partida.name}
 									value={partida.percent || 0}
 								/>

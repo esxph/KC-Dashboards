@@ -5,7 +5,7 @@
     import TrendingUpIcon from "@lucide/svelte/icons/trending-up";
   
     const chartData = [
-    //   { browser: "other", visitors: 90, color: "var(--color-other)" },
+      // { browser: "other", visitors: 90, color: "var(--color-other)" },
       { browser: "Partidas", visitors: 173, color: "var(--color-edge)" },
       { browser: "Subpartidas", visitors: 187, color: "var(--color-firefox)" },
       { browser: "Conceptos", visitors: 200, color: "var(--color-safari)" },
@@ -18,17 +18,21 @@
       safari: { label: "Safari", color: "var(--chart-2)" },
       firefox: { label: "Firefox", color: "var(--chart-3)" },
       edge: { label: "Edge", color: "var(--chart-4)" },
-    //   other: { label: "Other", color: "var(--chart-5)" },
+      // other: { label: "Other", color: "var(--chart-5)" },
     } satisfies Chart.ChartConfig;
+    let {
+      title = "Progreso Total",
+      description = "Avance total por concepto"
+    } = $props();
   </script>
-  
-  <Card.Root>
-    <Card.Header class="items-center">
-      <Card.Title>Radial Chart - Label</Card.Title>
-      <Card.Description>Showing total visitors for the last 6 months</Card.Description>
+
+  <Card.Root class="h-[450px] flex flex-col">
+    <Card.Header class="items-center flex-shrink-0 h-[70px] overflow-hidden">
+      <Card.Title class="text-sm font-medium leading-tight line-clamp-2">{title}</Card.Title>
+      <Card.Description class="text-xs leading-tight line-clamp-1">{description}</Card.Description>
     </Card.Header>
-    <Card.Content class="flex-1">
-      <Chart.Container config={chartConfig} class="mx-auto aspect-square max-h-[250px]">
+    <Card.Content class="flex-1 flex items-center justify-center min-h-0 overflow-hidden h-[350px]">
+      <Chart.Container config={chartConfig} class="h-full w-full max-h-[300px] max-w-[300px]">
         <ArcChart
           label="browser"
           value="visitors"
@@ -66,7 +70,7 @@
         </ArcChart>
       </Chart.Container>
     </Card.Content>
-    <Card.Footer class="flex-col gap-2 text-sm">
+    <Card.Footer class="flex-col gap-1 text-sm flex-shrink-0 h-[30px]">
       <div class="flex items-center gap-2 font-medium leading-none">
         Trending up by 5.2% this month <TrendingUpIcon class="size-4" />
       </div>

@@ -54,7 +54,7 @@
 			<h3 class="text-lg font-semibold">Resumen por Subconcepto</h3>
 			<div class="grid auto-rows-min gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
 				{#each components as component (component.id)}
-					<div class="aspect-square rounded-xl">
+					<div class="h-[350px] rounded-xl">
 						<RadialChart title={component.name} value={component.percent} description="" />
 					</div>
 				{/each}

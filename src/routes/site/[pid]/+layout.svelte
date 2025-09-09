@@ -17,8 +17,7 @@
 		{ title: 'Partidas', url: '/partidas', icon: ChevronRight },
 		{ title: 'Subpartidas', url: '/subpartidas', icon: ChevronRight },
 		{ title: 'Conceptos', url: '/conceptos', icon: ChevronRight },
-		{ title: 'Subconceptos', url: '/subconceptos', icon: ChevronRight },
-		{ title: 'Chart Test', url: '/chart-test', icon: BarChart3Icon }
+		{ title: 'Subconceptos', url: '/subconceptos', icon: ChevronRight }
 	];
 
 	// Handle theme parameter from URL

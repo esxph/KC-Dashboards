@@ -18,13 +18,13 @@
     } satisfies Chart.ChartConfig;
   </script>
   
-  <Card.Root>
-    <Card.Header class="items-center">
-      <Card.Title>{title}</Card.Title>
-      <Card.Description>{description}</Card.Description>
+  <Card.Root class="h-[350px] flex flex-col">
+    <Card.Header class="items-center flex-shrink-0 h-[70px] overflow-hidden">
+      <Card.Title class="text-sm font-medium leading-tight line-clamp-2">{title}</Card.Title>
+      <Card.Description class="text-xs leading-tight line-clamp-1">{description}</Card.Description>
     </Card.Header>
-    <Card.Content class="flex-1 min-h-[140px] flex items-center justify-center">
-      <Chart.Container config={chartConfig} class="h-[140px] w-[140px] sm:h-[168px] sm:w-[168px] md:h-[196px] md:w-[196px]">
+    <Card.Content class="flex-1 flex items-center justify-center min-h-0 overflow-hidden h-[230px]">
+      <Chart.Container config={chartConfig} class="h-full w-full max-h-[196px] max-w-[196px]">
         <ArcChart
           label="browser"
           value="visitors"
@@ -46,7 +46,7 @@
           tooltip={false}
         >
           {#snippet belowMarks()}
-            <circle cx="0" cy="0" r="25" class="fill-background" />
+            <circle cx="0" cy="0" r="0" class="fill-background" />
           {/snippet}
   
           {#snippet aboveMarks()}
@@ -68,7 +68,7 @@
         </ArcChart>
       </Chart.Container>
     </Card.Content>
-    <Card.Footer class="flex-col gap-2 text-sm">
+    <Card.Footer class="flex-col gap-1 text-sm flex-shrink-0 h-[30px]">
       <div class="flex items-center gap-2 font-medium leading-none">
         Progress: {value}% <TrendingUpIcon class="size-4" />
       </div>

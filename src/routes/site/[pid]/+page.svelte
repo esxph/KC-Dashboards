@@ -52,7 +52,7 @@
 	<!-- Main Content -->
 	<div class="flex h-full flex-col gap-4 md:gap-6 mt-2">
         <!-- Top Section: Map and Overall Progress Widget -->
-        <div class="hidden md:flex flex min-h-0 flex-[2] flex-col gap-4 lg:flex-row lg:gap-6">
+        <div class="hidden md:flex flex min-h-0 flex-[2.5] flex-col gap-4 lg:flex-row lg:gap-6 mb-10">
 			<!-- Map Section -->
 			<div class="min-h-0 flex-[7] min-h-[500px] lg:min-h-0">
 				{#if kmzExists && kmzUrl}
@@ -70,14 +70,15 @@
 			</div>
           <!-- Overall Progress Widget -->
           <div class="min-h-0 flex-[3] min-w-[180px] lg:min-w-0">
-				<RadialChartLabel />
+				<RadialChartLabel
+					title="Progreso Total"
+					description="Avance total por concepto"
+				/>
 			</div>
 		</div>
 
 		<!-- Enhanced LineChart using ChartContainer and ChartTooltip -->
-		<div class="p-4">
-			<h3 class="text-lg font-semibold mb-2">Evolución Temporal del Proyecto</h3>
-			<p class="text-sm text-muted-foreground mb-4">Seguimiento del progreso real vs proyectado</p>
+		<div>
 			<LineChartMultiple
 				data={multiSeriesData}
 				seriesKeys={['Real', 'Projectado']}
@@ -105,7 +106,7 @@
 				<div class="h-full">
 					<h3 class="mb-3 text-lg font-semibold md:mb-4">Progreso por Partidas</h3>
 					<div class="grid auto-rows-min gap-3 md:gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-						<div class="md:hidden aspect-square">
+						<div class="md:hidden h-[350px]">
 							<RadialChart
 								title="Progreso General"
 								value={overallProgress|| 0}
@@ -113,7 +114,7 @@
 							/>
 						</div>
 						{#each partidas as partida (partida.id)}
-							<div class="aspect-square">
+							<div class="h-[350px]">
 								<RadialChart
 									title={partida.name}
 									value={partida.percent || 0}

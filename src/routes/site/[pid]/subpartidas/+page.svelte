@@ -76,23 +76,27 @@
 	<!-- Chart Widgets Grid -->
 	<div class="grid auto-rows-min gap-4 md:grid-cols-2">
 		<!-- Enhanced BarChart using ChartContainer and ChartTooltip -->
-		<div class="p-4">
-			<h3 class="text-lg font-semibold mb-2">Progreso vs Línea Base</h3>
-			<p class="text-sm text-muted-foreground mb-4">Comparación del avance real contra la planificación inicial</p>
+		<div>
 			<BarChart
 				data={dateSeriesData.map(item => ({
 					month: item.date.toLocaleDateString('es-ES', { month: 'short', day: 'numeric' }),
 					planeada: item.baseline,
 					real: item.value
 				}))}
+				title="Progreso vs Línea Base"
+				description="Comparación del avance real contra la planificación inicial"
 			/>
 		</div>
 
 		<!-- Enhanced LineChart using ChartContainer and ChartTooltip -->
-		<div class="p-4">
-			<h3 class="text-lg font-semibold mb-2">Evolución Temporal por Categoría</h3>
-			<p class="text-sm text-muted-foreground mb-4">Seguimiento del progreso de diferentes tipos de subpartidas</p>
-			<LineChartMultiple />
+		<div>
+			<LineChartMultiple
+				seriesKeys={['desktop', 'mobile']}
+				seriesLabels={['Subpartida A', 'Subpartida B']}
+				seriesColors={['#2563eb', '#dc2626']}
+				title="Evolución Temporal por Categoría"
+				description="Seguimiento del progreso de diferentes tipos de subpartidas"
+			/>
 		</div>
 	</div>
 
@@ -105,7 +109,7 @@
 			<h3 class="text-lg font-semibold">Resumen por Subpartida</h3>
 			<div class="grid auto-rows-min gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
 				{#each components as component (component.id)}
-					<div class="aspect-square rounded-xl">
+					<div class="h-[350px] rounded-xl">
 						<RadialChart title={component.name} value={component.percent} description="" />
 					</div>
 				{/each}

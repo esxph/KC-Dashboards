@@ -1,7 +1,7 @@
 <script lang="ts">
 	import * as Card from '$lib/components/ui/card/index.js';
-	import ArcChart from '$lib/components/charts/arc-chart.svelte';
-	import BarChartComponent from '$lib/components/charts/bar-chart.svelte';
+	import RadialChart from '$lib/components/radial-chart.svelte';
+	import BarChart from '$lib/components/bar-chart.svelte';
 	let { data } = $props();
 	let { components } = $derived(data);
 
@@ -32,31 +32,30 @@
 	<!-- Chart Widgets Grid -->
 	<div class="grid auto-rows-min gap-4 md:grid-cols-2">
 		<!-- Enhanced BarChart using ChartContainer and ChartTooltip -->
-		<BarChartComponent
-			title="Progreso vs Línea Base"
-			description="Comparación del avance real contra la planificación inicial"
-			data={dateSeriesData}
-			x="date"
-			y="value"
-			series={[
-				{ key: 'baseline', color: 'var(--color-surface-content)', props: { fillOpacity: 0.2 } },
-				{ key: 'value', color: '#2563eb', props: { insets: { x: 8 } } }
-			]}
-			chartConfig={chartConfig}
-		/>
+		<div class="p-4">
+			<h3 class="text-lg font-semibold mb-2">Progreso vs Línea Base</h3>
+			<p class="text-sm text-muted-foreground mb-4">Comparación del avance real contra la planificación inicial</p>
+			<BarChart
+				data={dateSeriesData.map(item => ({
+					month: item.date.toLocaleDateString('es-ES', { month: 'short', day: 'numeric' }),
+					planeada: item.baseline,
+					real: item.value
+				}))}
+			/>
+		</div>
 	</div>
 
 	{#if !components?.length}
 		<div class="flex h-[200px] items-center justify-center text-muted-foreground">
-			No hay subpartidas para este proyecto
+			No hay subconceptos para este proyecto
 		</div>
 	{:else}
 		<div class="space-y-4">
 			<h3 class="text-lg font-semibold">Resumen por Subconcepto</h3>
-			<div class="grid auto-rows-min gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+			<div class="grid auto-rows-min gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
 				{#each components as component (component.id)}
-					<div class="aspect-square rounded-xl">
-						<ArcChart title={component.name} value={component.percent} description="" />
+					<div class="h-[350px] rounded-xl">
+						<RadialChart title={component.name} value={component.percent} description="" />
 					</div>
 				{/each}
 			</div>

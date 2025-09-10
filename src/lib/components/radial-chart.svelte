@@ -70,10 +70,10 @@
     </Card.Content>
     <Card.Footer class="flex-col gap-1 text-sm flex-shrink-0 h-[30px]">
       <div class="flex items-center gap-2 font-medium leading-none">
-        Progress: {value}% <TrendingUpIcon class="size-4" />
+        Progreso: {value}% <TrendingUpIcon class="size-4" />
       </div>
       <div class="text-muted-foreground flex items-center gap-2 leading-none">
-        Current Status
+        Estatus Actual
       </div>
     </Card.Footer>
   </Card.Root>

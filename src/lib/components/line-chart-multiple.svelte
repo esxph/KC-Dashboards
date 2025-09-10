@@ -70,10 +70,10 @@
       <div class="flex w-full items-start gap-2 text-sm">
         <div class="grid gap-2">
           <div class="flex items-center gap-2 font-medium leading-none">
-            Trending up by 5.2% this month <TrendingUpIcon class="size-4" />
+            Tendencia a la alta de 5.2% este mes <TrendingUpIcon class="size-4" />
           </div>
           <div class="text-muted-foreground flex items-center gap-2 leading-none">
-            January - June 2024
+            Enero - Junio 2024
           </div>
         </div>
       </div>

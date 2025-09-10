@@ -5,7 +5,6 @@
     import TrendingUpIcon from "@lucide/svelte/icons/trending-up";
   
     const chartData = [
-      // { browser: "other", visitors: 90, color: "var(--color-other)" },
       { browser: "Partidas", visitors: 173, color: "var(--color-edge)" },
       { browser: "Subpartidas", visitors: 187, color: "var(--color-firefox)" },
       { browser: "Conceptos", visitors: 200, color: "var(--color-safari)" },
@@ -18,7 +17,6 @@
       safari: { label: "Safari", color: "var(--chart-2)" },
       firefox: { label: "Firefox", color: "var(--chart-3)" },
       edge: { label: "Edge", color: "var(--chart-4)" },
-      // other: { label: "Other", color: "var(--chart-5)" },
     } satisfies Chart.ChartConfig;
     let {
       title = "Progreso Total",
@@ -26,7 +24,7 @@
     } = $props();
   </script>
 
-  <Card.Root class="h-[450px] flex flex-col">
+  <Card.Root class="h-[450px] min-w-[300px] flex flex-col mb-36">
     <Card.Header class="items-center flex-shrink-0 h-[70px] overflow-hidden">
       <Card.Title class="text-sm font-medium leading-tight line-clamp-2">{title}</Card.Title>
       <Card.Description class="text-xs leading-tight line-clamp-1">{description}</Card.Description>
@@ -72,10 +70,10 @@
     </Card.Content>
     <Card.Footer class="flex-col gap-1 text-sm flex-shrink-0 h-[30px]">
       <div class="flex items-center gap-2 font-medium leading-none">
-        Trending up by 5.2% this month <TrendingUpIcon class="size-4" />
+        Tendencia a la alta de 5.2% este mes <TrendingUpIcon class="size-4" />
       </div>
       <div class="text-muted-foreground flex items-center gap-2 leading-none">
-        January - June 2024
+        Enero - Junio 2024
       </div>
     </Card.Footer>
   </Card.Root>

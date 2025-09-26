@@ -4,6 +4,7 @@
 	import RadialChartLabel from '$lib/components/radial-chart-label.svelte';
 	import * as Card from '$lib/components/ui/card/index.js';
 	import LineChartMultiple from '$lib/components/line-chart-multiple.svelte';
+	import DownloadButton from '$lib/components/download-button.svelte';
 
 	const { data } = $props();
 	const { partidas, overallProgress, kmzExists, kmzUrl, project,locations } = $derived(data);
@@ -47,6 +48,7 @@
 			</h2>
 			<p class="text-muted-foreground">Resumen general del progreso.</p>
 		</div>
+		<DownloadButton projectName={project?.name || 'Proyecto'} tabName="Dashboard" />
 	</div>
 
 	<!-- Main Content -->

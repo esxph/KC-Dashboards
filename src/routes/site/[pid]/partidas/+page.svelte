@@ -1,10 +1,17 @@
 <script lang="ts">
 	import RadialChart from '$lib/components/radial-chart.svelte';
+	import DownloadButton from '$lib/components/download-button.svelte';
 	let { data } = $props();
-	let { components } = $derived(data);
+	let { components, project } = $derived(data);
 </script>
 
 <div class="flex flex-1 flex-col gap-8 p-8">
+	<!-- Header with Download Button -->
+	<div class="flex items-center justify-between">
+		<h1 class="text-2xl font-semibold">Partidas</h1>
+		<DownloadButton projectName={project?.name || 'Proyecto'} tabName="Partidas" />
+	</div>
+
 	{#if !components?.length}
 		<div class="flex h-[200px] items-center justify-center text-muted-foreground">
 			No hay partidas para este proyecto

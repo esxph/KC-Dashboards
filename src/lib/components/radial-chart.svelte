@@ -51,14 +51,14 @@
   
           {#snippet aboveMarks()}
             <Text
-              value={String(value)}
+              value={String(value)+"%"}
               textAnchor="middle"
               verticalAnchor="middle"
               class="fill-foreground text-4xl! font-bold"
               dy={3}
             />
             <Text
-              value="Progress"
+              value="Progreso"
               textAnchor="middle"
               verticalAnchor="middle"
               class="fill-muted-foreground!"
@@ -69,12 +69,7 @@
       </Chart.Container>
     </Card.Content>
     <Card.Footer class="flex-col gap-1 text-sm flex-shrink-0 h-[30px]">
-      <div class="flex items-center gap-2 font-medium leading-none">
-        Progreso: {value}% <TrendingUpIcon class="size-4" />
-      </div>
-      <div class="text-muted-foreground flex items-center gap-2 leading-none">
-        Estatus Actual
-      </div>
+
     </Card.Footer>
   </Card.Root>
   

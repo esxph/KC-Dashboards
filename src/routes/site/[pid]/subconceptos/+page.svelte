@@ -2,8 +2,9 @@
 	import * as Card from '$lib/components/ui/card/index.js';
 	import RadialChart from '$lib/components/radial-chart.svelte';
 	import BarChart from '$lib/components/bar-chart.svelte';
+	import DownloadButton from '$lib/components/download-button.svelte';
 	let { data } = $props();
-	let { components } = $derived(data);
+	let { components, project } = $derived(data);
 
 	// Chart configuration for consistent styling and behavior
 	const chartConfig = {
@@ -29,6 +30,12 @@
 </script>
 
 <div class="flex flex-1 flex-col gap-8 p-8">
+	<!-- Header with Download Button -->
+	<div class="flex items-center justify-between">
+		<h1 class="text-2xl font-semibold">Subconceptos</h1>
+		<DownloadButton projectName={project?.name || 'Proyecto'} tabName="Subconceptos" />
+	</div>
+
 	<!-- Chart Widgets Grid -->
 	<div class="grid auto-rows-min gap-4 md:grid-cols-2">
 		<!-- Enhanced BarChart using ChartContainer and ChartTooltip -->

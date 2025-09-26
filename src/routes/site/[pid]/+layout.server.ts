@@ -41,8 +41,8 @@ export const load: LayoutServerLoad = async ({ locals: { supabase }, params }) =
 		project: {
 			id: params.pid,
 			role: currentMembership.role,
-			name: currentProject.name,
-			description: currentProject.description
+			name: currentProject?.name || 'Proyecto',
+			description: currentProject?.description || ''
 		},
 		projectList
 	};

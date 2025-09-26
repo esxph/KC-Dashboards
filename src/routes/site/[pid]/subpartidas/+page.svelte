@@ -3,9 +3,10 @@
 	import RadialChart from '$lib/components/radial-chart.svelte';
 	import BarChart from '$lib/components/bar-chart.svelte';
 	import LineChartMultiple from '$lib/components/line-chart-multiple.svelte';
+	import DownloadButton from '$lib/components/download-button.svelte';
 	
 	let { data } = $props();
-	let { components } = $derived(data);
+	let { components, project } = $derived(data);
 
 	// Chart configuration for consistent styling and behavior
 	const chartConfig = {
@@ -36,6 +37,12 @@
 </script>
 
 <div class="flex flex-1 flex-col gap-8 p-8">
+	<!-- Header with Download Button -->
+	<div class="flex items-center justify-between">
+		<h1 class="text-2xl font-semibold">Subpartidas</h1>
+		<DownloadButton projectName={project?.name || 'Proyecto'} tabName="Subpartidas" />
+	</div>
+
 	<!-- Summary Metrics for Subpartidas -->
 	<div class="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
 		<Card.Root class="p-4">
